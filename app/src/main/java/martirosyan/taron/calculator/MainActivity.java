@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.button_armat:
-                 action.setText(action.getText() + "√");
+//                 action.setText(action.getText() + "√");
 
                 break;
             case R.id.button_tokos:

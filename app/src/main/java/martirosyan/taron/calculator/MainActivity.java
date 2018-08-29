@@ -280,6 +280,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ACTION = EQUALS;
                     hystory.setText(hystory.getText().toString() + String.valueOf(val2) + "=" + String.valueOf(val1));
                     action.setText(null);
+                    val2=0.0;
                     if ((String.format("%.0f", val1).toString().length()) > 10) {
                         setActionTextSize();
                         action.setText(String.valueOf(val1));
@@ -309,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (action.getText().toString().length() > 0 && !action.getText().toString().equals("0.")) {
                     int index = action.getText().toString().length() - 1;
                     action.setText(action.getText().toString().substring(0, index));
-                    hystory.setText(action.getText());
+                  //  hystory.setText(action.getText());
                     setActionTextSize();
                 } else if (action.getText().toString().equals("0.")) {
                     action.setText("");

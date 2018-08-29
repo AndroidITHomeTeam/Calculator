@@ -44,8 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private char ACTION;
     double result;
     int countAction = 0;
+    private boolean act;
+
     LinkedHashMap<String, Character> actionType = new LinkedHashMap<>();
-    DecimalFormat decimalFormat1=new DecimalFormat("0.00");
+    DecimalFormat decimalFormat1 = new DecimalFormat("0.00");
 
 
     private int count = 0;
@@ -67,45 +69,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.button0:
                 if (action.getText().length() != 0) {
-                    action.setText(action.getText().toString() + "0");
-                    //  hystory.setText(action.getText());
+                    if (checksTheSimbolsCount()) {
+                        action.setText(action.getText().toString() + "0");
+                    }
+                    setActionTextSize();
                 }
                 break;
             case R.id.button1:
-                action.setText(action.getText().toString() + "1");
-                // hystory.setText(action.getText());
+                if (checksTheSimbolsCount()) {
+                    action.setText(action.getText().toString() + "1");
+                }
+                setActionTextSize();
                 break;
             case R.id.button2:
-                action.setText(action.getText().toString() + "2");
-                hystory.setText(hystory.getText().toString());
+                if (checksTheSimbolsCount()) {
+                    action.setText(action.getText().toString() + "2");
+                }
+                setActionTextSize();
                 break;
             case R.id.button3:
-                action.setText(action.getText() + "3");
-                // hystory.setText(action.getText());
+                if (checksTheSimbolsCount()) {
+                    action.setText(action.getText() + "3");
+                }
+                setActionTextSize();
                 break;
             case R.id.button4:
-                action.setText(action.getText() + "4");
-                //  hystory.setText(action.getText());
+                if (checksTheSimbolsCount()) {
+                    action.setText(action.getText() + "4");
+                }
+                setActionTextSize();
                 break;
             case R.id.button5:
-                action.setText(action.getText() + "5");
-                //hystory.setText(action.getText());
+                if (checksTheSimbolsCount()) {
+                    action.setText(action.getText() + "5");
+                }
+                setActionTextSize();
                 break;
             case R.id.button6:
-                action.setText(action.getText() + "6");
-                // hystory.setText(action.getText());
+                if (checksTheSimbolsCount()) {
+                    action.setText(action.getText() + "6");
+                }
+                setActionTextSize();
                 break;
             case R.id.button7:
-                action.setText(action.getText() + "7");
-                //  hystory.setText(action.getText());
+                if (checksTheSimbolsCount()) {
+                    action.setText(action.getText() + "7");
+                }
+                setActionTextSize();
                 break;
             case R.id.button8:
-                action.setText(action.getText() + "8");
-                //  hystory.setText(action.getText());
+                if (checksTheSimbolsCount()) {
+                    action.setText(action.getText() + "8");
+                }
+                setActionTextSize();
                 break;
             case R.id.button9:
-                action.setText(action.getText() + "9");
-                //  hystory.setText(action.getText());
+                if (checksTheSimbolsCount()) {
+                    action.setText(action.getText() + "9");
+                }
+                setActionTextSize();
                 break;
             case R.id.button_double_id:
                 if (action.getText().length() != 0 && action.getText().toString().
@@ -115,21 +137,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     hystory.setText(hystory.getText().toString());
                     Log.i("if", "onClick: ---->1");
                     count++;
-                } else if ( action.getText().length() != 0 && !action.getText().toString().contains(".")) {
+                } else if (action.getText().length() != 0 && !action.getText().toString().contains(".")) {
                     action.setText(action.getText() + ".");
                     hystory.setText(action.getText());
                     Log.i("if", "onClick: ---->2");
                     count++;
-                }
-                else if (hystory.getText().toString().length()!=0 && hystory.getText().toString().charAt(
-                        hystory.getText().toString().length()-1)>0 &&hystory.getText().toString().charAt(
-                        hystory.getText().toString().length()-1)<9 && action.getText().toString().length()>0 ){
-                    action.setText(action.getText()+".");
+                } else if (hystory.getText().toString().length() != 0 && hystory.getText().toString().charAt(
+                        hystory.getText().toString().length() - 1) > 0 && hystory.getText().toString().charAt(
+                        hystory.getText().toString().length() - 1) < 9 && action.getText().toString().length() > 0) {
+                    action.setText(action.getText() + ".");
                     Log.i("if", "onClick: ---->3");
 
 
-                }
-                else if (action.getText().length() == 0 && !action.getText().toString().contains(".")) {
+                } else if (action.getText().length() == 0 && !action.getText().toString().contains(".")) {
                     action.setText(action.getText() + "0.");
                     hystory.setText(hystory.getText().toString());
                     count++;
@@ -142,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 val1 = Double.NaN;
                 val2 = 0.0;
                 count = 0;
+                setActionTextSize();
                 break;
 
             case R.id.button_gumarum:
@@ -159,58 +180,75 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                        action.setText(null);
 //                   }
 //                }else {
-                compute();
-                    actionType.put("Action", ADDITION);
-                    Log.i("map_size", "gumarum: " + actionType.size());
-                    for (Map.Entry<String, Character> i : actionType.entrySet()) {
-                        ACTION = i.getValue();
-                        Log.i("map", "Action===== " + i.getValue());
-
-                        hystory.setText(String.valueOf(val1)+ ACTION);
-                        action.setText(null);
-                    }
-
-
+//                compute();
+//                actionType.put("Action", ADDITION);
+//                Log.i("map_size", "gumarum: " + actionType.size());
+//                for (Map.Entry<String, Character> i : actionType.entrySet()) {
+//                    ACTION = i.getValue();
+//                    Log.i("map", "Action===== " + i.getValue());
+//
+//                    hystory.setText(String.valueOf(val1) + ACTION);
+//                    action.setText(null);
+//                }
+                if (operation() == true) {
+                    compute();
+                    ACTION = ADDITION;
+                    hystory.setText(String.valueOf(val1) + ADDITION);
+                    action.setText(null);
+                } else {
+                    action.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1));
+                    hystory.setText(action.getText().toString() + ADDITION);
+                    ACTION = ADDITION;
+                    compute();
+                    action.setText(null);
+                }
 
 
                 break;
 
             case R.id.button_hanum:
 
-                  //  compute();
+                //  compute();
 //                    actionType.put("Action", SUBTRACTION);
 //                    Log.i("map_size", "gumarum: " + actionType.size());
 //                    for (Map.Entry<String, Character> i : actionType.entrySet()) {
 //                        ACTION = i.getValue();
 //                        Log.i("map", "Action===== " + i.getValue());
 
-                        if (hystory.getText().toString().endsWith("+")){
-                            hystory.setText(String.valueOf(val1) + SUBTRACTION);
-                            action.setText(null);
-                        }else {
-//                            compute();
-//                            ACTION=SUBTRACTION;
-                            hystory.setText(String.valueOf(val1) + SUBTRACTION);
-                            action.setText(null);
-                        }
-                compute();
-                ACTION=SUBTRACTION;
+                if (operation() == true) {
+                    compute();
+                    ACTION = SUBTRACTION;
+                    hystory.setText(String.valueOf(val1) + SUBTRACTION);
+                    action.setText(null);
+                } else {
 
+
+                    action.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1));
+                    hystory.setText(null);
+                    compute();
+                    ACTION = SUBTRACTION;
+
+                    hystory.setText(action.getText().toString() + SUBTRACTION);
+                    action.setText(null);
+                }
 
 
                 break;
 
             case R.id.button_bajanum:
-                compute();
-                ACTION = DIVISION;
+                if (!hystory.getText().toString().contains("WRONG FORMAT")) {
+                    compute();
+                    ACTION = DIVISION;
 
-                hystory.setText(String.valueOf( val1)+ "/");
-                action.setText(null);
+                    hystory.setText(String.valueOf(val1) + "/");
+                    action.setText(null);
+                }else {
+
+                }
                 break;
 
             case R.id.button_bazmapatkum:
                 compute();
-                countAction++;
                 ACTION = MULTIPLIKATION;
                 hystory.setText(String.valueOf(val1) + "*");
                 action.setText(null);
@@ -229,15 +267,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                }
 //                break;
                 Log.i("havasar", "onClick: " + hystory.getText().toString());
-                if (hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) != '+'
-                        || hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) != '-'
-                        ||hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) != '*'
-                        ||hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) == '/'
-                        && action.getText().toString().length() > 0) {
+                if (hystory.getText().toString().endsWith("-") ||
+                        hystory.getText().toString().endsWith("+") ||
+                        hystory.getText().toString().endsWith("*") ||
+                        hystory.getText().toString().endsWith("/") &&
+                        !hystory.getText().toString().contains("WRONG FORMAT")
+                       // && val2.toString().length() > 0
+                        ) {
+                    Log.i("wrong", "onClick: arachin if------ ");
 
                     compute();
                     ACTION = EQUALS;
                     hystory.setText(hystory.getText().toString() + String.valueOf(val2) + "=" + String.valueOf(val1));
+                    action.setText(null);
                     if ((String.format("%.0f", val1).toString().length()) > 10) {
                         setActionTextSize();
                         action.setText(String.valueOf(val1));
@@ -250,8 +292,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                        action.setText(String.format("%.0f", val1));
 //                    }
                 } else if (hystory.getText().toString().contains("WRONG FORMAT")) {
-                    hystory.setText(hystory.getText().toString() );
-                } else {
+                    Log.i("wrong", "onClick: else if erkrord------ ");
+                    hystory.setText(hystory.getText().toString());
+                } else if (val2!=null &&
+                        hystory.getText().toString().endsWith("+") ||
+                        hystory.getText().toString().endsWith("-") ||
+                        hystory.getText().toString().endsWith("*") ||
+                        hystory.getText().toString().endsWith("/")) {
+
+                    Log.i("wrong", "onClick: errord else if------ ");
                     hystory.setText(hystory.getText().toString() + " WRONG FORMAT ");
                 }
                 break;
@@ -261,11 +310,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     int index = action.getText().toString().length() - 1;
                     action.setText(action.getText().toString().substring(0, index));
                     hystory.setText(action.getText());
-                    count = 0;
+                    setActionTextSize();
                 } else if (action.getText().toString().equals("0.")) {
                     action.setText("");
-                   // hystory.setText(action.getText());
-                    count = 0;
+                    setActionTextSize();
+                    // hystory.setText(action.getText());
                 }
 
                 break;
@@ -288,7 +337,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void compute() {
         if (!Double.isNaN(val1)) {
             // val1=Double.parseDouble(hystory.getText().toString());
-            val2 = Double.valueOf(action.getText().toString());
+            if (!action.getText().toString().isEmpty()) {
+                val2 = Double.valueOf(action.getText().toString());
+            }
             //   Toast.makeText(this, "mtav", Toast.LENGTH_SHORT).show();
             Toast.makeText(this, "vall====" + val1, Toast.LENGTH_SHORT).show();
             Toast.makeText(this, "val2====" + val2, Toast.LENGTH_LONG).show();
@@ -328,17 +379,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     break;
             }
-//        } else if (Double.isNaN(val1)){
-//            val1 = Double.valueOf(hystory.getText().toString().substring(0,
-//                    hystory.getText().toString().length()-1));
+        } else if (!Double.isNaN(val1) && operation()==false){
+            val1 = Double.valueOf(hystory.getText().toString().substring(0,
+                    hystory.getText().toString().length()-1));
 
-        }
-
-        else {
-            val1= Double.valueOf(action.getText().toString());
+        } else {
+            val1 = Double.valueOf(action.getText().toString());
         }
     }
-
 
 
     private void setActionTextSize() {
@@ -349,25 +397,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private boolean checksTheSimbolsCount() {
+        boolean checked;
+        String text = action.getText().toString();
+        if (text.contains(".")
+                && text.substring(text.indexOf(".")).length() > 10) {
+            Toast.makeText(this, "Maximum number of digits after decimal point is 10", Toast.LENGTH_SHORT).show();
+            checked = false;
+        } else {
+            checked = true;
+        }
+        return checked;
+    }
 
-//    public boolean operation() {
-//
-//        if (hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) != '-' ||
-//                hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) != '+' ||
-//                hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) != '/' ||
-//                hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) != '*') {
-//
-//           act=true;
-//
-//        } else if (hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) == '-' ||
-//                hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) == '+' ||
-//                hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) == '/' ||
-//                hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) == '*') {
-//          act=false;
-//        }
-//
-//          return act;
-//        }
+
+    public boolean operation() {
+
+        if (hystory.getText().toString().length() > 0 &&
+                !hystory.getText().toString().endsWith("-") ||
+                !hystory.getText().toString().endsWith("+") ||
+                !hystory.getText().toString().endsWith("*") ||
+                !hystory.getText().toString().endsWith("/")
+                ) {
+
+            act = true;
+
+        } else if (hystory.getText().toString().endsWith("-") ||
+                hystory.getText().toString().endsWith("+") ||
+                hystory.getText().toString().endsWith("*") ||
+                hystory.getText().toString().endsWith("/")) {
+            act = false;
+//        }else if (hystory.getText().toString().isEmpty()){
+//            act=true;
+        }
+
+        return act;
+    }
 
 //    public void Sum() {
 //        if (action.getText().toString().length() != 0 && count == 0) {

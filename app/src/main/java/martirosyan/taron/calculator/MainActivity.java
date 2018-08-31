@@ -36,14 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final char ROOT = '√';
     private final char PERCENT = '%';
     private char ACTION;
-    double result;
-    int countAction = 0;
     private boolean act;
-
-    LinkedHashMap<String, Character> actionType = new LinkedHashMap<>();
-    DecimalFormat decimalFormat1 = new DecimalFormat("0.00");
-    private int count = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,12 +118,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     action.setText(action.getText() + ".");
                     hystory.setText(hystory.getText().toString());
                     Log.i("if", "onClick: ---->1");
-                    count++;
                 } else if (action.getText().length() != 0 && !action.getText().toString().contains(".")) {
                     action.setText(action.getText() + ".");
                     hystory.setText(action.getText());
                     Log.i("if", "onClick: ---->2");
-                    count++;
                 } else if (hystory.getText().toString().length() != 0 && hystory.getText().toString().charAt(
                         hystory.getText().toString().length() - 1) > 0 && hystory.getText().toString().charAt(
                         hystory.getText().toString().length() - 1) < 9 && action.getText().toString().length() > 0) {
@@ -139,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else if (action.getText().length() == 0 && !action.getText().toString().contains(".")) {
                     action.setText(action.getText() + "0.");
                     hystory.setText(hystory.getText().toString());
-                    count++;
                     Log.i("if", "onClick: ---->4");
                 }
                 break;
@@ -148,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 hystory.setText(null);
                 val1 = Double.NaN;
                 val2 = 0.0;
-                count = 0;
                 setActionTextSize();
                 break;
             case R.id.button_gumarum:
@@ -388,11 +377,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonDelete.setOnClickListener(this);
         buttonPercent.setOnClickListener(this);
     }
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        Intent i = new Intent(MainActivity.this, MainActivity.class);  //your class
-//        startActivity(i);
-//        finish();
-//    }
 }

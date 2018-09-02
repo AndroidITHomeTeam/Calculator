@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -20,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
+    private static final String TAG = "Main";
     private DecimalFormat decimalFormat;
     private Button button1, button2,
             button3, button4, button5,
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView hystory;
     private EditText action;
     private double val1 = Double.NaN;
-    private Double val2;
+    Double val2 = 0.0;
     private final char ADDITION = '+';
     private final char SUBTRACTION = '-';
     private final char MULTIPLIKATION = '*';
@@ -42,15 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final char ARMAT = '√';
     private final char TOKOS = '%';
     private char ACTION;
-    double result;
-    int countAction = 0;
     private boolean act;
-
-    LinkedHashMap<String, Character> actionType = new LinkedHashMap<>();
-    DecimalFormat decimalFormat1 = new DecimalFormat("0.00");
-
-
-    private int count = 0;
 
 
     @Override
@@ -136,12 +129,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     action.setText(action.getText() + ".");
                     hystory.setText(hystory.getText().toString());
                     Log.i("if", "onClick: ---->1");
-                    count++;
                 } else if (action.getText().length() != 0 && !action.getText().toString().contains(".")) {
                     action.setText(action.getText() + ".");
                     hystory.setText(action.getText());
                     Log.i("if", "onClick: ---->2");
-                    count++;
                 } else if (hystory.getText().toString().length() != 0 && hystory.getText().toString().charAt(
                         hystory.getText().toString().length() - 1) > 0 && hystory.getText().toString().charAt(
                         hystory.getText().toString().length() - 1) < 9 && action.getText().toString().length() > 0) {
@@ -152,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else if (action.getText().length() == 0 && !action.getText().toString().contains(".")) {
                     action.setText(action.getText() + "0.");
                     hystory.setText(hystory.getText().toString());
-                    count++;
                     Log.i("if", "onClick: ---->4");
                 }
                 break;
@@ -161,148 +151,158 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 hystory.setText(null);
                 val1 = Double.NaN;
                 val2 = 0.0;
-                count = 0;
                 setActionTextSize();
                 break;
 
             case R.id.button_gumarum:
-//                if (!hystory.getText().toString().contains("=")){
-//                   // hystory.setText(action.getText().toString());
-//                    hystory.setText("");
-//               // if (action.getText().toString().length() > 0) {
-//                    actionType.put("Action", ADDITION);
-//                    Log.i("map_size", "gumarum: " + actionType.size());
-//                    for (Map.Entry<String, Character> i : actionType.entrySet()) {
-//                        ACTION = i.getValue();
-//                        Log.i("map", "Action===== " + i.getValue());
-//                        compute();
-//                        hystory.setText(String.valueOf(val1) + i.getValue());
-//                        action.setText(null);
-//                   }
-//                }else {
-//                compute();
-//                actionType.put("Action", ADDITION);
-//                Log.i("map_size", "gumarum: " + actionType.size());
-//                for (Map.Entry<String, Character> i : actionType.entrySet()) {
-//                    ACTION = i.getValue();
-//                    Log.i("map", "Action===== " + i.getValue());
-//
-//                    hystory.setText(String.valueOf(val1) + ACTION);
-//                    action.setText(null);
-//                }
-                if (operation() == true) {
+                if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
+                    Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (operation()) {
                     compute();
                     ACTION = ADDITION;
                     hystory.setText(String.valueOf(val1) + ADDITION);
                     action.setText(null);
+                    val2 = 0.0;
+                    Log.i(TAG, "button_gumarum: if (operation())" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
                 } else {
-                    action.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1));
-                    hystory.setText(action.getText().toString() + ADDITION);
-                    ACTION = ADDITION;
+                    //  action.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1));
+                    Toast.makeText(this, "val1 else==" + val1, Toast.LENGTH_SHORT).show();
                     compute();
+                    ACTION = ADDITION;
+                    hystory.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1) + ADDITION);
                     action.setText(null);
+                    // val2 = 0.0;
+                    Log.i(TAG, "button_gumarum: else" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
+
                 }
 
 
                 break;
 
             case R.id.button_hanum:
-
-                //  compute();
-//                    actionType.put("Action", SUBTRACTION);
-//                    Log.i("map_size", "gumarum: " + actionType.size());
-//                    for (Map.Entry<String, Character> i : actionType.entrySet()) {
-//                        ACTION = i.getValue();
-//                        Log.i("map", "Action===== " + i.getValue());
+                if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
+                    Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 if (operation() == true) {
                     compute();
                     ACTION = SUBTRACTION;
                     hystory.setText(String.valueOf(val1) + SUBTRACTION);
                     action.setText(null);
+                    val2 = 0.0;
+                    Log.i(TAG, "button_hanum: if (operation())" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
+                    return;
                 } else {
-
-
-                    action.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1));
-                    hystory.setText(null);
+                    Toast.makeText(this, "mta else", Toast.LENGTH_SHORT).show();
+//                    action.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1));
+//                    hystory.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1) + SUBTRACTION);
                     compute();
                     ACTION = SUBTRACTION;
-
                     hystory.setText(action.getText().toString() + SUBTRACTION);
                     action.setText(null);
+                    Log.i(TAG, "button_hanum: else" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
+                    // val2 = 0.0;
                 }
 
 
                 break;
 
             case R.id.button_bajanum:
-                if (!hystory.getText().toString().contains("WRONG FORMAT")) {
+                if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
+                    Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (operation() == true) {
                     compute();
                     ACTION = DIVISION;
-
-                    hystory.setText(String.valueOf(val1) + "/");
+                    hystory.setText(String.valueOf(val1) + DIVISION);
                     action.setText(null);
-                }else {
+                    val2 = 0.0;
+                    Log.i(TAG, "button_bajanum: if (operation())" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
 
+                } else {
+                    compute();
+                    ACTION = DIVISION;
+                    hystory.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1) + DIVISION);
+                    action.setText(null);
+                    Log.i(TAG, "button_bajanum: else" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
                 }
                 break;
 
             case R.id.button_bazmapatkum:
-                compute();
-                ACTION = MULTIPLIKATION;
-                hystory.setText(String.valueOf(val1) + "*");
-                action.setText(null);
+                if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
+                    Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (operation()) {
+                    compute();
+                    ACTION = MULTIPLIKATION;
+                    hystory.setText(String.valueOf(val1) + MULTIPLIKATION);
+                    action.setText(null);
+                    val2 = 0.0;
+                    Log.i(TAG, "button_bazmapatkum: if (operation())" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
+                } else {
+                    compute();
+                    ACTION = MULTIPLIKATION;
+                    hystory.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1) + MULTIPLIKATION);
+                    action.setText(null);
+                    Log.i(TAG, "button_bazmapatkum: else" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
+                }
                 break;
 
 
             case R.id.button_havasar:
-//                compute();
-//                ACTION = EQUALS;
-//                hystory.setText(hystory.getText().toString() + String.valueOf(val2) + "=" + String.valueOf(val1));
-//
-//                if ( String.format("%.0f", val1).toString().length() > 12 ) {
-//                    action.setText(String.format("%.0f", val1));
-//                } else {
-//                    action.setText(String.valueOf(val1));
-//                }
-//                break;
+                if (ACTION == DIVISION && action.getText().toString().length() == 0) {
+                    Toast.makeText(this, "Not division by zero", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Log.i("havasar", "onClick: " + hystory.getText().toString());
                 if (hystory.getText().toString().endsWith("-") ||
+                        hystory.getText().toString().endsWith("%") ||
                         hystory.getText().toString().endsWith("+") ||
                         hystory.getText().toString().endsWith("*") ||
-                        hystory.getText().toString().endsWith("/") &&
-                        !hystory.getText().toString().contains("WRONG FORMAT")
-                       // && val2.toString().length() > 0
+                        hystory.getText().toString().endsWith("/")
                         ) {
-                    Log.i("wrong", "onClick: arachin if------ ");
 
-                    compute();
-                    ACTION = EQUALS;
-                    hystory.setText(hystory.getText().toString() + String.valueOf(val2) + "=" + String.valueOf(val1));
-                    action.setText(null);
-                    val2=0.0;
-                    if ((String.format("%.0f", val1).toString().length()) > 10) {
-                        setActionTextSize();
-                        action.setText(String.valueOf(val1));
-//                    action.setText(new DecimalFormat("##.####").format(val1));
-                        Toast.makeText(this, "" + val1, Toast.LENGTH_SHORT).show();
+                    if (action.getText().toString().length() != 0 &&
+                            !hystory.getText().toString().contains("WRONG FORMAT")) {
+
+
+                        Log.i("wrong", "onClick: arachin if------ " + action.getText().toString().length());
+
+                        compute();
+                        ACTION = EQUALS;
+                        AstichanE();
+                        hystory.setText(hystory.getText().toString() + String.valueOf(val2) + "=" + String.valueOf(val1));
+                        action.setText(null);
+
+                        if (String.valueOf(val1).toString().length() > 10) {
+                            setHystoryTextSize();
+                            Log.i(TAG, "onClick: if (String.valueOf(val1).toString().length() > 10) ");
+                        }
                     }
-//                    action.setText(new DecimalFormat("##.#####").format(Double.parseDouble(action.getText().toString())));
-//                    }
-// else {
-//                        action.setText(String.format("%.0f", val1));
-//                    }
                 } else if (hystory.getText().toString().contains("WRONG FORMAT")) {
                     Log.i("wrong", "onClick: else if erkrord------ ");
                     hystory.setText(hystory.getText().toString());
-                } else if (val2!=null &&
+                } else if (val2 != null &&
                         hystory.getText().toString().endsWith("+") ||
+                        hystory.getText().toString().endsWith("%") ||
                         hystory.getText().toString().endsWith("-") ||
                         hystory.getText().toString().endsWith("*") ||
                         hystory.getText().toString().endsWith("/")) {
 
                     Log.i("wrong", "onClick: errord else if------ ");
                     hystory.setText(hystory.getText().toString() + " WRONG FORMAT ");
+                } else if (hystory.getText().toString().endsWith("+") ||
+                        hystory.getText().toString().endsWith("%") ||
+                        hystory.getText().toString().endsWith("-") ||
+                        hystory.getText().toString().endsWith("*") ||
+                        hystory.getText().toString().endsWith("/") &&
+                                action.getText().toString().length() == 0) {
+                    hystory.setText(hystory.getText().toString() + " = WRONG FORMAT");
                 }
                 break;
 
@@ -310,91 +310,152 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (action.getText().toString().length() > 0 && !action.getText().toString().equals("0.")) {
                     int index = action.getText().toString().length() - 1;
                     action.setText(action.getText().toString().substring(0, index));
-                  //  hystory.setText(action.getText());
                     setActionTextSize();
                 } else if (action.getText().toString().equals("0.")) {
                     action.setText("");
                     setActionTextSize();
-                    // hystory.setText(action.getText());
                 }
 
                 break;
             case R.id.button_armat:
-//                 action.setText(action.getText() + "√");
+                if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
+                    Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
+                    return;
+                } else if (action.getText().toString().length() != 0) {
+                    val1 = Double.parseDouble(action.getText().toString());
+                    hystory.setText(ARMAT + action.getText().toString());
+                    hystory.setText(ARMAT + String.valueOf(val1));
 
+                    val1 = Math.sqrt(val1);
+
+                    if ((String.valueOf(val1).length() > 6)) {
+                        DecimalFormat df = new DecimalFormat("0.00000000##");
+                        val1 = Double.parseDouble(df.format(val1));
+                        setActionTextSize();
+                        hystory.setText(hystory.getText().toString() + " = " + val1);
+                        Log.i(TAG, "onClick: if ((String.format(\"%.0f\", val1).toString().length()) > 6) ");
+                    }
+//                    hystory.setText(hystory.getText().toString() + " = " + val1);
+                    action.setText(null);
+                } else if (action.getText().toString().length() == 0 && hystory.getText().toString().length() > 0) {
+                    hystory.setText(ARMAT + String.valueOf(val1) + " = " + Math.sqrt(val1));
+                    val1 = Math.sqrt(val1);
+                }
                 break;
             case R.id.button_tokos:
+                if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
+                    Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (operation()) {
+                    compute();
+                    ACTION = TOKOS;
+                    hystory.setText(String.valueOf(val1) + TOKOS);
+                    action.setText(null);
 
-                compute();
-                ACTION = TOKOS;
+                    val2 = 0.0;
+                    Log.i(TAG, "button_gumarum: if (operation())" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
+                } else {
 
-                hystory.setText(String.valueOf(val1) + "%");
-                action.setText(null);
+                    //  action.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1));
+                    Toast.makeText(this, "val1 else==" + val1, Toast.LENGTH_SHORT).show();
+                    compute();
+                    ACTION = TOKOS;
+                    hystory.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1) + TOKOS);
+                    action.setText(null);
+                    val2 = 0.0;
+                    Log.i(TAG, "button_gumarum: else" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
+
+                }
                 break;
         }
     }
 
 
     private void compute() {
+        Log.i(TAG, "compute: val1 " + val1);
         if (!Double.isNaN(val1)) {
-            // val1=Double.parseDouble(hystory.getText().toString());
-            if (!action.getText().toString().isEmpty()) {
-                val2 = Double.valueOf(action.getText().toString());
+            if (!action.getText().toString().equals("")) {
+                val2 = Double.parseDouble(action.getText().toString());
+                if (String.valueOf(val2).toString().length() > 12) {
+                    val2 = Double.valueOf(String.format("%6.3e", val2));
+                    Log.i("val2", "compute: val2 === = = = = = = >" + val2);
+                }
+                Log.i("ccc", "action.getText().toString()----->" + action.getText().toString());
+                Log.i(TAG, "compute:  if (!action.getText().toString().equals(\"\"))" + " val1 " + val1 + " val2 " + val2);
             }
-            //   Toast.makeText(this, "mtav", Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "compute: if (!Double.isNaN(val1)) " + " val1 " + val1 + " val2 " + val2);
             Toast.makeText(this, "vall====" + val1, Toast.LENGTH_SHORT).show();
             Toast.makeText(this, "val2====" + val2, Toast.LENGTH_LONG).show();
             switch (ACTION) {
 
+
                 case ADDITION:
-                    // if (hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) == '+') {
-                    val1 = val1 + val2;
-                    // }
+                    if (action.getText().toString().length() != 0) {
+                        val1 = val1 + val2;
+                        Log.i(TAG, "compute: ADDITION val1 " + val1 + " val2 " + val2);
+                    }
                     break;
 
                 case SUBTRACTION:
-                    // if (hystory.getText().toString().charAt(hystory.getText().toString().length() - 1) == '-') {
-                    val1 = val1 - val2;
-                    //  }
+                    if (action.getText().toString().length() != 0) {
+                        val1 = val1 - val2;
+                        Log.i(TAG, "compute: SUBTRACTION val1 " + val1 + " val2 " + val2);
+                    }
                     break;
 
                 case MULTIPLIKATION:
-                    val1 = val1 * val2;
-                    break;
+                    if (action.getText().toString().length() != 0) {
+                        val1 = val1 * val2;
+                        Log.i(TAG, "compute: MULTIPLIKATION val1 " + val1 + " val2 " + val2);
+                        break;
+                    }
 
                 case DIVISION:
-                    val1 = val1 / val2;
+                    if (action.getText().toString().length() != 0) {
+                        if (!action.getText().toString().equals("") && val2 != 0.0) {
+                            val1 = val1 / val2;
+                            Log.i(TAG, "compute: DIVISION val1 " + val1 + " val2 " + val2);
+                        } else {
+                            Toast.makeText(this, "Not division by zero", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                     break;
 
                 case ARMAT:
                     if (val1 > 0) {
-
                         val1 = Math.sqrt(val1);
                     }
+                    Log.i(TAG, "compute: ARMAT  val1 = " + val1);
                     break;
                 case TOKOS:
-                    val1 = val1 * val2 / 100;
+                    if (val2 != 0) {
+                        val1 = val1 * val2 / 100;
+                    }
                     break;
                 case EQUALS:
-                    //action.setText(""+result);
-
                     break;
             }
-        } else if (!Double.isNaN(val1) && operation()==false){
-            val1 = Double.valueOf(hystory.getText().toString().substring(0,
-                    hystory.getText().toString().length()-1));
 
         } else {
             val1 = Double.valueOf(action.getText().toString());
+            Log.i("compute", "compute: els---if---->");
+            Log.i(TAG, "compute: else" + " val1 " + val1 + " val2 " + val2);
         }
     }
 
 
     private void setActionTextSize() {
         if (action.getText().toString().length() >= 13) {
-            action.setTextSize(25);
+            action.setTextSize(20);
         } else {
             action.setTextSize(50);
+        }
+    }
+
+    private void setHystoryTextSize() {
+        if (hystory.getText().toString().length() >= 10) {
+            hystory.setTextSize(20);
         }
     }
 
@@ -414,49 +475,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public boolean operation() {
 
-        if (hystory.getText().toString().length() > 0 &&
-                !hystory.getText().toString().endsWith("-") ||
+        if (!hystory.getText().toString().endsWith("-") ||
                 !hystory.getText().toString().endsWith("+") ||
+                !hystory.getText().toString().endsWith("%") ||
                 !hystory.getText().toString().endsWith("*") ||
                 !hystory.getText().toString().endsWith("/")
                 ) {
+            // val2 = 0.0;
 
             act = true;
 
         } else if (hystory.getText().toString().endsWith("-") ||
                 hystory.getText().toString().endsWith("+") ||
                 hystory.getText().toString().endsWith("*") ||
-                hystory.getText().toString().endsWith("/")) {
+                hystory.getText().toString().endsWith("%") ||
+                hystory.getText().toString().endsWith("/")
+                        && action.getText().toString().length() > 0) {
+            //  val2 = 0.0;
             act = false;
-//        }else if (hystory.getText().toString().isEmpty()){
-//            act=true;
         }
 
         return act;
     }
-
-//    public void Sum() {
-//        if (action.getText().toString().length() != 0 && count == 0) {
-//            action.setText(action.getText().toString() + "+");
-//            hystory.setText(hystory.getText().toString() + "+");
-//            count++;
-//        } else if (action.getText().toString().length() == 0 && count == 0) {
-//            action.setText("");
-//            hystory.setText("");
-//        } else if (action.getText().toString().length() != 0 && count > 0 && action.getText().toString().
-//                charAt(action.getText().toString().length()-1)=='+') {
-//
-//            for (int i = 0; i <action.getText().toString().length() ; i++) {
-//
-//                result=
-//            }
-//
-//
-//        }
-//
-//        // return result;
-//
-//    }
 
 
     public void getViewID() {
@@ -510,6 +550,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void AstichanE() {
+        if (String.valueOf(val1).toString().length() > 10) {
+            val1 = Double.parseDouble(String.format("%6.3e", val1));
+
+            Log.i("exponential", "AstichanE: val1=======" + val1);
+        }
+    }
+
 //    @Override
 //    protected void onRestart() {
 //        super.onRestart();
@@ -518,4 +566,3 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        finish();
 //    }
 }
-

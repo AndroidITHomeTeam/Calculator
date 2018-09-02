@@ -1,8 +1,6 @@
 package martirosyan.taron.calculator;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,16 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Main";
-    private DecimalFormat decimalFormat;
     private Button button1, button2,
             button3, button4, button5,
             button6, button7, button8,
@@ -197,8 +188,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 } else {
                     Toast.makeText(this, "mta else", Toast.LENGTH_SHORT).show();
-//                    action.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1));
-//                    hystory.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1) + SUBTRACTION);
                     compute();
                     ACTION = SUBTRACTION;
                     hystory.setText(action.getText().toString() + SUBTRACTION);
@@ -491,7 +480,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 hystory.getText().toString().endsWith("%") ||
                 hystory.getText().toString().endsWith("/")
                         && action.getText().toString().length() > 0) {
-            //  val2 = 0.0;
             act = false;
         }
 

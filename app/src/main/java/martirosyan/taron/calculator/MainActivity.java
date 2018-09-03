@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -17,22 +16,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button button1, button2,
             button3, button4, button5,
             button6, button7, button8,
-            button9, button0, buttonGumar,
-            buttonBajanum, buttonHanum, buttonBazmapatkum,
-            buttonEquals, buttonBack, buttonArmat,
-            buttonTokos, buttonDouble, buttonDelete;
+            button9, button0, button_addition,
+            button_division, button_subtraction,
+            button_multiplication, buttonEquals,
+            buttonBack, button_root,
+            button_percent, button_dot, button_delete;
 
     private TextView hystory;
     private EditText action;
     private double val1 = Double.NaN;
-    Double val2 = 0.0;
+    private Double val2 = 0.0;
     private final char ADDITION = '+';
     private final char SUBTRACTION = '-';
-    private final char MULTIPLIKATION = '*';
+    private final char MULTIPLICATION = '*';
     private final char DIVISION = '/';
     private final char EQUALS = 0;
-    private final char ARMAT = '√';
-    private final char TOKOS = '%';
+    private final char ROOT = '√';
+    private final char PERCENT = '%';
     private char ACTION;
     private boolean act;
 
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         getViewID();
         SetOnClick();
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -120,16 +119,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     action.setText(action.getText() + ".");
                     hystory.setText(hystory.getText().toString());
                     Log.i("if", "onClick: ---->1");
+
                 } else if (action.getText().length() != 0 && !action.getText().toString().contains(".")) {
                     action.setText(action.getText() + ".");
                     hystory.setText(action.getText());
                     Log.i("if", "onClick: ---->2");
+
                 } else if (hystory.getText().toString().length() != 0 && hystory.getText().toString().charAt(
                         hystory.getText().toString().length() - 1) > 0 && hystory.getText().toString().charAt(
                         hystory.getText().toString().length() - 1) < 9 && action.getText().toString().length() > 0) {
                     action.setText(action.getText() + ".");
                     Log.i("if", "onClick: ---->3");
-
 
                 } else if (action.getText().length() == 0 && !action.getText().toString().contains(".")) {
                     action.setText(action.getText() + "0.");
@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.i("if", "onClick: ---->4");
                 }
                 break;
+
             case R.id.button_delete_id:
                 action.setText(null);
                 hystory.setText(null);
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setActionTextSize();
                 break;
 
-            case R.id.button_gumarum:
+            case R.id.button_addition:
                 if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
                     Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
                     return;
@@ -158,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     val2 = 0.0;
                     Log.i(TAG, "button_gumarum: if (operation())" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
                 } else {
-                    //  action.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1));
                     Toast.makeText(this, "val1 else==" + val1, Toast.LENGTH_SHORT).show();
                     compute();
                     ACTION = ADDITION;
@@ -166,18 +166,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     action.setText(null);
                     // val2 = 0.0;
                     Log.i(TAG, "button_gumarum: else" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
-
                 }
-
-
                 break;
 
-            case R.id.button_hanum:
+            case R.id.button_subtraction:
                 if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
                     Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
                     return;
                 }
-
                 if (operation() == true) {
                     compute();
                     ACTION = SUBTRACTION;
@@ -193,13 +189,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     hystory.setText(action.getText().toString() + SUBTRACTION);
                     action.setText(null);
                     Log.i(TAG, "button_hanum: else" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
-                    // val2 = 0.0;
                 }
-
-
                 break;
 
-            case R.id.button_bajanum:
+            case R.id.button_division:
                 if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
                     Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
                     return;
@@ -221,29 +214,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
 
-            case R.id.button_bazmapatkum:
+            case R.id.button_multiplication:
                 if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
                     Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (operation()) {
                     compute();
-                    ACTION = MULTIPLIKATION;
-                    hystory.setText(String.valueOf(val1) + MULTIPLIKATION);
+                    ACTION = MULTIPLICATION;
+                    hystory.setText(String.valueOf(val1) + MULTIPLICATION);
                     action.setText(null);
                     val2 = 0.0;
                     Log.i(TAG, "button_bazmapatkum: if (operation())" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
                 } else {
                     compute();
-                    ACTION = MULTIPLIKATION;
-                    hystory.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1) + MULTIPLIKATION);
+                    ACTION = MULTIPLICATION;
+                    hystory.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1) + MULTIPLICATION);
                     action.setText(null);
                     Log.i(TAG, "button_bazmapatkum: else" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
                 }
                 break;
 
 
-            case R.id.button_havasar:
+            case R.id.button_equals:
                 if (ACTION == DIVISION && action.getText().toString().length() == 0) {
                     Toast.makeText(this, "Not division by zero", Toast.LENGTH_SHORT).show();
                     return;
@@ -258,10 +251,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if (action.getText().toString().length() != 0 &&
                             !hystory.getText().toString().contains("WRONG FORMAT")) {
-
-
                         Log.i("wrong", "onClick: arachin if------ " + action.getText().toString().length());
-
                         compute();
                         ACTION = EQUALS;
                         AstichanE();
@@ -282,7 +272,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         hystory.getText().toString().endsWith("-") ||
                         hystory.getText().toString().endsWith("*") ||
                         hystory.getText().toString().endsWith("/")) {
-
                     Log.i("wrong", "onClick: errord else if------ ");
                     hystory.setText(hystory.getText().toString() + " WRONG FORMAT ");
                 } else if (hystory.getText().toString().endsWith("+") ||
@@ -306,15 +295,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 break;
-            case R.id.button_armat:
+            case R.id.button_root:
                 if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
                     Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
                     return;
                 } else if (action.getText().toString().length() != 0) {
                     val1 = Double.parseDouble(action.getText().toString());
-                    hystory.setText(ARMAT + action.getText().toString());
-                    hystory.setText(ARMAT + String.valueOf(val1));
-
+                    hystory.setText(ROOT + action.getText().toString());
+                    hystory.setText(ROOT + String.valueOf(val1));
                     val1 = Math.sqrt(val1);
 
                     if ((String.valueOf(val1).length() > 6)) {
@@ -323,31 +311,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         setActionTextSize();
                         hystory.setText(hystory.getText().toString() + " = " + val1);
                         Log.i(TAG, "onClick: if ((String.format(\"%.0f\", val1).toString().length()) > 6) ");
-                    }
-                    else {
+                    } else {
                         val1 = Double.parseDouble(action.getText().toString());
-                        hystory.setText(ARMAT + action.getText().toString());
-                        hystory.setText(ARMAT + String.valueOf(val1)+ " = " + Math.sqrt(val1));
-
+                        hystory.setText(ROOT + action.getText().toString());
+                        hystory.setText(ROOT + String.valueOf(val1) + " = " + Math.sqrt(val1));
                         val1 = Math.sqrt(val1);
 
                     }
-//                    hystory.setText(hystory.getText().toString() + " = " + val1);
                     action.setText(null);
                 } else if (action.getText().toString().length() == 0 && hystory.getText().toString().length() > 0) {
-                    hystory.setText(ARMAT + String.valueOf(val1) + " = " + Math.sqrt(val1));
+                    hystory.setText(ROOT + String.valueOf(val1) + " = " + Math.sqrt(val1));
                     val1 = Math.sqrt(val1);
                 }
                 break;
-            case R.id.button_tokos:
+            case R.id.button_percent:
                 if (action.getText().toString().equals("") && hystory.getText().toString().equals("")) {
                     Toast.makeText(this, "Wrong Action", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (operation()) {
                     compute();
-                    ACTION = TOKOS;
-                    hystory.setText(String.valueOf(val1) + TOKOS);
+                    ACTION = PERCENT;
+                    hystory.setText(String.valueOf(val1) + PERCENT);
                     action.setText(null);
 
                     val2 = 0.0;
@@ -357,8 +342,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //  action.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1));
                     Toast.makeText(this, "val1 else==" + val1, Toast.LENGTH_SHORT).show();
                     compute();
-                    ACTION = TOKOS;
-                    hystory.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1) + TOKOS);
+                    ACTION = PERCENT;
+                    hystory.setText(hystory.getText().toString().substring(0, hystory.getText().toString().length() - 1) + PERCENT);
                     action.setText(null);
                     val2 = 0.0;
                     Log.i(TAG, "button_gumarum: else" + " val1 " + val1 + " val2 " + val2 + " ACTION " + ACTION);
@@ -401,10 +386,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     break;
 
-                case MULTIPLIKATION:
+                case MULTIPLICATION:
                     if (action.getText().toString().length() != 0) {
                         val1 = val1 * val2;
-                        Log.i(TAG, "compute: MULTIPLIKATION val1 " + val1 + " val2 " + val2);
+                        Log.i(TAG, "compute: MULTIPLICATION val1 " + val1 + " val2 " + val2);
                         break;
                     }
 
@@ -419,13 +404,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     break;
 
-                case ARMAT:
+                case ROOT:
                     if (val1 > 0) {
                         val1 = Math.sqrt(val1);
                     }
-                    Log.i(TAG, "compute: ARMAT  val1 = " + val1);
+                    Log.i(TAG, "compute: ROOT  val1 = " + val1);
                     break;
-                case TOKOS:
+                case PERCENT:
                     if (val2 != 0) {
                         val1 = val1 * val2 / 100;
                     }
@@ -469,17 +454,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return checked;
     }
 
-
     public boolean operation() {
-
         if (!hystory.getText().toString().endsWith("-") ||
                 !hystory.getText().toString().endsWith("+") ||
                 !hystory.getText().toString().endsWith("%") ||
                 !hystory.getText().toString().endsWith("*") ||
-                !hystory.getText().toString().endsWith("/")
-                ) {
-            // val2 = 0.0;
-
+                !hystory.getText().toString().endsWith("/")) {
             act = true;
 
         } else if (hystory.getText().toString().endsWith("-") ||
@@ -506,16 +486,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button7 = findViewById(R.id.button7);
         button8 = findViewById(R.id.button8);
         button9 = findViewById(R.id.button9);
-        buttonGumar = findViewById(R.id.button_gumarum);
-        buttonBajanum = findViewById(R.id.button_bajanum);
-        buttonHanum = findViewById(R.id.button_hanum);
-        buttonBazmapatkum = findViewById(R.id.button_bazmapatkum);
-        buttonEquals = findViewById(R.id.button_havasar);
-        buttonArmat = findViewById(R.id.button_armat);
-        buttonDouble = findViewById(R.id.button_double_id);
+        button_addition = findViewById(R.id.button_addition);
+        button_division = findViewById(R.id.button_division);
+        button_subtraction = findViewById(R.id.button_subtraction);
+        button_multiplication = findViewById(R.id.button_multiplication);
+        buttonEquals = findViewById(R.id.button_equals);
+        button_root = findViewById(R.id.button_root);
+        button_dot = findViewById(R.id.button_double_id);
         buttonBack = findViewById(R.id.button_back_id);
-        buttonDelete = findViewById(R.id.button_delete_id);
-        buttonTokos = findViewById(R.id.button_tokos);
+        button_delete = findViewById(R.id.button_delete_id);
+        button_percent = findViewById(R.id.button_percent);
         action = findViewById(R.id.textView_action_id);
         hystory = findViewById(R.id.textView_hystory_id);
 
@@ -533,16 +513,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button7.setOnClickListener(this);
         button8.setOnClickListener(this);
         button9.setOnClickListener(this);
-        buttonGumar.setOnClickListener(this);
-        buttonBajanum.setOnClickListener(this);
-        buttonHanum.setOnClickListener(this);
-        buttonBazmapatkum.setOnClickListener(this);
+        button_addition.setOnClickListener(this);
+        button_division.setOnClickListener(this);
+        button_subtraction.setOnClickListener(this);
+        button_multiplication.setOnClickListener(this);
         buttonEquals.setOnClickListener(this);
-        buttonArmat.setOnClickListener(this);
-        buttonDouble.setOnClickListener(this);
+        button_root.setOnClickListener(this);
+        button_dot.setOnClickListener(this);
         buttonBack.setOnClickListener(this);
-        buttonDelete.setOnClickListener(this);
-        buttonTokos.setOnClickListener(this);
+        button_delete.setOnClickListener(this);
+        button_percent.setOnClickListener(this);
 
     }
 

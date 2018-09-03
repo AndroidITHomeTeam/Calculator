@@ -324,6 +324,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         hystory.setText(hystory.getText().toString() + " = " + val1);
                         Log.i(TAG, "onClick: if ((String.format(\"%.0f\", val1).toString().length()) > 6) ");
                     }
+                    else {
+                        val1 = Double.parseDouble(action.getText().toString());
+                        hystory.setText(ARMAT + action.getText().toString());
+                        hystory.setText(ARMAT + String.valueOf(val1)+ " = " + Math.sqrt(val1));
+
+                        val1 = Math.sqrt(val1);
+
+                    }
 //                    hystory.setText(hystory.getText().toString() + " = " + val1);
                     action.setText(null);
                 } else if (action.getText().toString().length() == 0 && hystory.getText().toString().length() > 0) {
